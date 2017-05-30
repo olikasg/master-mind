@@ -50,7 +50,7 @@
                                 (if (= g s) :correct
                                     (if (some #(= g %) state)
                                       :present
-                                      nil))) guess state)))]))
+                                      nil))) (set guess) state)))]))
 
 (defn print-result
   [guess result]
