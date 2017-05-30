@@ -54,6 +54,7 @@
 
 (defn print-result
   [guess result]
+  (print "  ")
   (apply print guess)
   (print " :: ")
   (apply print (map name result))
@@ -62,6 +63,7 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
+  (println "Try to guess the correct sequence!\nExample input: 1 2 3 4")
   (let [state (gen-code!)]
     (loop []
       (let [guess (ask-for-guess)
