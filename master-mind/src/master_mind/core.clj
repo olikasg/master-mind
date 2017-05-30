@@ -61,7 +61,6 @@
   (println))
 
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
   (println "Try to guess the correct sequence!\nExample input: 1 2 3 4")
   (let [state (gen-code!)]
