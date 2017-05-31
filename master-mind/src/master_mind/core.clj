@@ -29,16 +29,17 @@
 (defn ask-for-guess
   []
   (loop []
-   (print "Guess ==> ")
-   (flush)
-   (let [raw-input (read-line)
-         result-list (try
-                       (map #(Integer/parseInt %) (-> (clojure.string/trim raw-input)
-                                                      (clojure.string/split  #" ")))
-                       (catch NumberFormatException e ((println "Error! Please try again!") []))) ]
-     (if (= (count result-list) 4)
-       (into [] result-list)
-       (recur)))))
+    (print "Guess ==> ")
+    (flush)
+    (let [raw-input (read-line)
+          result-list (try
+                        (mapv #(Integer/parseInt %) (-> (clojure.string/trim raw-input)
+                                                        (clojure.string/split  #" ")))
+                        (catch Exception _ (println "Error! Please try again!"))) ]
+      (if (= (count result-list) 4)
+        result-list
+        (recur)
+        ))))
 
 (defn check-guess
   [guess state]
