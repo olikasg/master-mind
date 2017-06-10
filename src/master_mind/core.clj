@@ -36,9 +36,12 @@
                         (mapv #(Integer/parseInt %) (-> (clojure.string/trim raw-input)
                                                         (clojure.string/split  #" ")))
                         (catch Exception _ (println "Error! Please try again!"))) ]
-      (if (= (count result-list) 4)
-        result-list
-        (recur)))))
+      (cond
+        (= (-> raw-input
+               clojure.string/trim
+               clojure.string/lower-case) ":quit") :quit
+        (= (count result-list) 4) result-list
+        :else (recur)))))
 
 (defn check-guess
   [guess state]
@@ -87,13 +90,15 @@
 
 (defn -main
   [& args]
-  (println "Try to guess the correct sequence!\nExample input: 1 2 3 4")
+  (println "Try to guess the correct sequence!\nExample input: 1 2 3 4\nQuit :quit")
   (let [state (gen-code!)]
     (loop []
-      (let [guess (ask-for-guess)
-            [final? result] (check-guess guess state)]
-        (print-result guess result)
-        (if final?
-          (println "Congratulations!!!")
-          (recur))))))
+      (let [guess (ask-for-guess)]
+        (if (= guess :quit)
+          (println "Quit")
+          (let [[final? result] (check-guess guess state)]
+            (print-result guess result)
+            (if final?
+              (println "Congratulations!!!")
+              (recur))))))))
 
